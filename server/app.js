@@ -14,7 +14,7 @@ config();
 
 app.use(express.json());
 app.use(cors({
-    origin: "https://lms-client-henna.vercel.app",
+    origin: ["https://lms-client-henna.vercel.app"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
 }));
