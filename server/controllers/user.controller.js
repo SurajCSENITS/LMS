@@ -1,6 +1,6 @@
 import User from "../models/user.model.js"
 import AppError from "../utils/error.util.js";
-import cloudinary from "cloudinary"
+import cloudinary from "cloudinary";
 import fs from "fs/promises";
 import sendEmail from "../utils/sendEmail.js";
 import crypto from "crypto";
@@ -49,7 +49,7 @@ const register = async (req, res, next) => {
                 }
 
                 // Remove file from server
-                // fs.rm(`uploads/${req.file.filename}`);
+                fs.rm(`uploads/${req.file.filename}`);
             } catch(err){
                 return next(new AppError(err.message || "File not uploaded, please try again", 500));
             }
@@ -242,7 +242,7 @@ const updateUser = async (req, res, next) => {
             }
 
             // Remove file from server
-            // fs.rm(`uploads/${req.file.filename}`);
+            fs.rm(`uploads/${req.file.filename}`);
         } catch(err){
             return next(new AppError(err.message || "File not uploaded, please try again", 500));
         }
