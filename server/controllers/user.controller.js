@@ -9,6 +9,7 @@ const cookieOptions= {
     maxAge: 7*24*60*60*1000,
     httpOnly: true,
     secure: true,
+    sameSite: 'None',
 };
 
 const register = async (req, res, next) => {
@@ -49,7 +50,7 @@ const register = async (req, res, next) => {
                 }
 
                 // Remove file from server
-                fs.rm(`uploads/${req.file.filename}`);
+                // fs.rm(`uploads/${req.file.filename}`);
             } catch(err){
                 return next(new AppError(err.message || "File not uploaded, please try again", 500));
             }

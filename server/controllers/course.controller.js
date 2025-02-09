@@ -67,7 +67,7 @@ const createCourse = async (req, res, next) => {
                 }
 
                 // Remove file from server
-                fs.rm(`uploads/${req.file.filename}`);
+                // fs.rm(`uploads/${req.file.filename}`);
             } catch(err){
                 return next(new AppError(err.message || "File not uploaded, please try again", 500));
             }
