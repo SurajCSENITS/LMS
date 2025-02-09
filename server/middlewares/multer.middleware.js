@@ -1,27 +1,26 @@
-import path from "path";
 import multer from "multer";
+import { CloudinaryStorage } from "multer-storage-cloudinary";
+import { v2 as cloudinary } from "cloudinary";
+import path from "path";
 
-const upload= multer({
-    dest: "uploads/",
-    limits: { fileSize: 50*1024*1024 }, // 50 mb is max size limit
-    storage: multer.diskStorage({
-        destination: "uploads/",
-        filename: (_req, file, cb) => {
-            cb(null, file.originalname);
-        },
-    }),
+// Configure Cloudinary Storage
+const storage = new CloudinaryStorage({
+    cloudinary,
+    params: {
+        folder: "uploads", // Cloudinary folder name
+        allowed_formats: ["jpg", "jpeg", "png", "webp", "mp4"], // Allowed formats
+        public_id: (_req, file) => file.originalname.split(".")[0], // Use original filename
+    },
+});
+
+// Initialize Multer with Cloudinary Storage
+const upload = multer({
+    storage,
+    limits: { fileSize: 50 * 1024 * 1024 }, // 50MB max file size
     fileFilter: (_req, file, cb) => {
-        let ext= path.extname(file.originalname);
-
-        if(
-            ext !== ".jpg" &&
-            ext !== ".jpeg" &&
-            ext !== ".webp" &&
-            ext !== ".png" &&
-            ext !== ".mp4"
-        ){
-            cb(new Error(`Unsupported file type! ${ext}`, false));
-            return;
+        let ext = path.extname(file.originalname).toLowerCase();
+        if (![".jpg", ".jpeg", ".webp", ".png", ".mp4"].includes(ext)) {
+            return cb(new Error(`Unsupported file type! ${ext}`));
         }
         cb(null, true);
     },
