@@ -16,13 +16,8 @@ export const razorpay= new Razorpay({ // razorpay configuration
     key_secret: process.env.RAZORPAY_SECRET
 })
 
-// Serverless function handler for Vercel
-export default async (req, res) => {
-    try {
-        await connetionToDB(); // Ensure DB connection is successful
-        app(req, res); // Forward the request to the Express app
-    } catch (error) {
-        console.error("Error in serverless function:", error);
-        res.status(500).json({ message: "Server error occurred" });
-    }
-};
+const PORT= process.env.PORT;
+app.listen(PORT, async () => {
+    await connetionToDB();
+    console.log(`App is runnig at http://localhost:${PORT}`);
+})

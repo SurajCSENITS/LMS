@@ -58,7 +58,7 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 Thank you for using our LMS Client project! Happy coding!
 
----------------------------------------------------***---------------------------------------------------------
+---
 
 # LMS Backend Server
 
@@ -123,3 +123,14 @@ Contributions are welcome! Please fork the repository and create a pull request 
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+---
+
+# Issues that I resolved while uploading the server on Vercel
+
+1. Created `vercel.json` file.
+2. Updated `server.json` code (added export function for `app.js`).
+3. Resolved the multer issue:
+    - Installed `multer-storage-cloudinary`.
+    - Downgraded `cloudinary` to resolve peer issues.
+4. Updated cookie options by adding `sameSite: 'None'`.
