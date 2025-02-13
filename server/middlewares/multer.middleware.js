@@ -6,10 +6,18 @@ import path from "path";
 // Configure Cloudinary Storage
 const storage = new CloudinaryStorage({
     cloudinary,
-    params: {
-        folder: "uploads", // Cloudinary folder name
-        allowed_formats: ["jpg", "jpeg", "png", "webp", "mp4"], // Allowed formats
-        public_id: (_req, file) => file.originalname.split(".")[0], // Use original filename
+    params: async (req, file) => {
+        let ext = path.extname(file.originalname).toLowerCase();
+        let resource_type = "image"; // Default to image
+        if ([".mp4"].includes(ext)) {
+            resource_type = "video"; // Set to video for mp4 files
+        }
+        return {
+            folder: "uploads", // Cloudinary folder name
+            format: ext.slice(1), // Use file extension as format
+            public_id: file.originalname.split(".")[0], // Use original filename
+            resource_type: resource_type, // Set resource type
+        };
     },
 });
 
